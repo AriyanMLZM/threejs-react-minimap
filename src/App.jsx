@@ -1,8 +1,12 @@
 import React from 'react'
 
+import { Model } from './model'
+
 const App = () => {
   return (
-    <div>App</div>
+    <main className='h-screen w-screen flex justify-center items-center'>
+      <Model />
+    </main>
   )
 }
 
