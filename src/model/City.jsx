@@ -1,34 +1,37 @@
 import React from 'react'
 import * as THREE from 'three'
 
+import data from '../json/data.json'
+
 const City = () => {
+  const planeGeo = new THREE.PlaneGeometry(50, 50)
+  planeGeo.rotateX(-Math.PI / 2)
+
   const buildingMaterial = new THREE.MeshStandardMaterial({ color: 'gray' })
   const planeMaterial = new THREE.MeshBasicMaterial({ color: '#222' })
-  
-  const heartShape = new THREE.Shape()
 
-  heartShape.moveTo(-1, 1)
-  heartShape.lineTo(-3, 3)
-  heartShape.lineTo(-3, 6)
-  heartShape.lineTo(-1, 8)
-  heartShape.lineTo(1, 6)
-  heartShape.lineTo(1, 3)
-  
-  const geometry = new THREE.ExtrudeGeometry(heartShape, { depth: 8 })
+  const genBuilding = (cords, floorCount) => {
+    const shape = new THREE.Shape()
+    shape.moveTo(cords[0][0], cords[0][1])
+    for (var i = 1, n = cords.length; i < n; i += 1) {
+      shape.lineTo(cords[i][0], cords[i][1])
+    }
 
-  const planeg = new THREE.PlaneGeometry(50, 50)
-  planeg.rotateX(-Math.PI / 2)
+    const geometry = new THREE.ExtrudeGeometry(shape, { depth: floorCount * 3 })
+    geometry.rotateX(-Math.PI / 2)
+
+    return geometry
+  }
 
   return (
     <group dispose={null}>
-      <mesh geometry={planeg} material={planeMaterial}/>
-      <mesh
-        receiveShadow
-        castShadow
-        geometry={geometry}
-        material={buildingMaterial}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
+      <mesh geometry={planeGeo} material={planeMaterial} />
+      {data.buildings.map((building) => (
+        <mesh
+          geometry={genBuilding(building.cords, building.floorCount)}
+          material={buildingMaterial}
+        />
+      ))}
     </group>
   )
 }
