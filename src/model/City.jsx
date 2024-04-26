@@ -7,13 +7,14 @@ const City = () => {
   
   const heartShape = new THREE.Shape()
 
-  heartShape.moveTo(0, 0)
-  heartShape.lineTo(0.5, 2.1)
-  heartShape.lineTo(4, 2)
-  heartShape.lineTo(5, 0.4)
-  heartShape.lineTo(2, -0.4)
-
-  const geometry = new THREE.ExtrudeGeometry(heartShape, { depth: 6 })
+  heartShape.moveTo(-1, 1)
+  heartShape.lineTo(-3, 3)
+  heartShape.lineTo(-3, 6)
+  heartShape.lineTo(-1, 8)
+  heartShape.lineTo(1, 6)
+  heartShape.lineTo(1, 3)
+  
+  const geometry = new THREE.ExtrudeGeometry(heartShape, { depth: 8 })
 
   const planeg = new THREE.PlaneGeometry(50, 50)
   planeg.rotateX(-Math.PI / 2)
